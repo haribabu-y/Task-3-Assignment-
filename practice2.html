@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spliting the div element</title>
+</head>
+<style>
+    .divElement {
+        width: 500px;
+        height: 300px;
+        background-color: aquamarine;
+        position: relative;
+    }
+    .splitter {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        background-color: blue;
+        width: 2px;
+    }
+</style>
+<body>
+    <div class="divElement" id="elementDiv"></div>
+
+    <script>
+        const splitMe = document.getElementById("elementDiv");
+
+        splitMe.addEventListener('click', function(event) {
+            const rect = this.getBoundingClientRect();
+            console.log(rect);
+            const clickX = event.clientX - rect.left;
+            console.log(clickX);
+            
+            const splitter = document.createElement("div");
+            splitter.classList.add("splitter");
+            splitter.style.left = `${clickX}px`;
+
+            this.appendChild(splitter);
+            
+        });
+    </script>
+</body>
+</html>

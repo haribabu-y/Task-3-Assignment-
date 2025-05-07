@@ -9,10 +9,10 @@
 <body>
     <div class="pagination">
         <a href="#">Page 1</a>
-        <a href="#">Page 2</a>
+        <a href="page2.html">Page 2</a>
     </div>
     <div class="elementsdiv">
-        <div class="element" onclick="splitDiv(event,this)" id="mainElement"></div>
+        <div class="element" onclick="splitDiv(event)" id="mainElement"></div>
         <div class="actionButton">
             <button onclick="allowCut()">Cut</button>
             <button onclick="joinParts()">Join</button>
@@ -21,7 +21,9 @@
         </div>
     </div>
     <hr>
-    <div class="dragdiv" id="dragplace"></div>
+    <div class="dragdiv" id="dragplace" ondrop="dropHandler(event,this)" ondragover="dragoverHandler(event)"></div>
+    <button onclick="buildTree()">Build Tree</button>
+    <div class="treeStructure" id="binaryTree"></div>
     <script src="/Task-3(2)/script.js"></script>
 </body>
 </html>

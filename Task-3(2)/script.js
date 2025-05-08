@@ -23,8 +23,15 @@ function renderPieces() {
 
 function splitDiv(event) {
     const cutAreaRect = cutArea.getBoundingClientRect();
-    // console.log(cutAreaRect);
+    console.log(cutAreaRect);
+    console.log(event.clientX);
+    console.log(cutAreaRect.left);
+    
     const clickX = event.clientX - cutAreaRect.left;
+    console.log(clickX);
+    console.log(pieces.length);
+    
+    
 
     let accumulatedWidth = 0;
     for(let i=0; i < pieces.length; i++) {
@@ -101,21 +108,36 @@ function dragoverHandler(event) {
     event.preventDefault();
 }
 
+let piecenum = 1;
 function dropHandler(event,object) {
     // receiving the data that is send by the dragstart handler 
     event.preventDefault();
     const data = event.dataTransfer.getData("text/plain");
+
     // getting the element that is sent
     const draggedElement = document.getElementById(data);
+    console.log(draggedElement);
+    
+
+    const copy = document.createElement('div');
+    copy.className = draggedElement.className;
+    copy.textContent = "";
+    copy.style.width = draggedElement.style.width;
+    copy.id = `piece${piecenum}`;
+    // copy.style.pointerEvents = "none";
+    piecenum++;
+    console.log(copy);
+    
+
     //appending the dragged element into the target
-    event.target.appendChild(draggedElement);
+    event.target.appendChild(copy);
 
     //finding the time od dropping
     const dropTime = new Date();
     //getting the dropping secondes
     let dropseconds = dropTime.getSeconds();
     // console.log(object);
-    object.lastChild.setAttribute("toolTip-data", `${dropTime.toLocaleTimeString()}`);
+    object.lastChild.setAttribute("tooltipData", `${dropTime.toLocaleTimeString()}`);
     // Based on the secondes setting the background color of the div element
     if(dropseconds % 2 == 0) {
         // console.log(dropseconds);
@@ -129,49 +151,134 @@ function dropHandler(event,object) {
     }
 }
 
+// function buildTree() {
+//     //Storing the tropprd element
+//     const droppedElements = document.querySelectorAll("#dragplace .piece");
+//     // console.log(droppedElements);
+//     const droppedElementsArray = [];
+//     droppedElements.forEach(element => {
+//         droppedElementsArray.push(element);
+//     });
+//     console.log(droppedElementsArray.length);
+    
+//     const tree = buildBinaryTree(droppedElementsArray);
+//     console.log(tree);
+//     // alert("Tree builed successfully.");
+       
+// }
+
+// function buildBinaryTree(array) {
+//     if(!array.length) return null;
+
+//     const root = new treeNode(array[0]);
+//     const queue = [root];
+//     let i=1;
+
+//     while(i < array.length) {
+//         const current = queue.shift();
+
+//         if(i < array.length) {
+//             current.left = new treeNode(array[i++]);
+//             queue.push(current.left);
+//         }
+
+//         if(i < array.length) {
+//             current.right = new treeNode(array[i++]);
+//             queue.push(current.right);
+//         }
+//     }
+
+//     return root;
+
+// }
+
+// function treeNode(value) {
+//     this.value = value;
+//     this.left = null;
+//     this.right = null;
+// }
+
 function buildTree() {
-    //Storing the tropprd element
     const droppedElements = document.querySelectorAll("#dragplace .piece");
-    // console.log(droppedElements);
     const droppedElementsArray = [];
+    console.log(droppedElements);
+
+    //Colllecting the div to build binary tree
+    const treeContainer = document.getElementById("binaryTree");
+    treeContainer.innerHTML = "";    
+
     droppedElements.forEach(element => {
         droppedElementsArray.push(element);
     });
-    console.log(droppedElementsArray.length);
+    console.log(droppedElementsArray);
     
-    const tree = buildBinaryTree(droppedElementsArray);
-    console.log(tree);
-    // alert("Tree builed successfully.");
-       
+    const nodeCount = droppedElementsArray.length;
+    console.log(nodeCount);
+    
+
+    // calculating the number of rows for binary tree
+    const rows = Math.ceil(Math.log2(nodeCount + 1));
+    console.log(rows);
+
+    treeContainer.style.gridTemplateRows = `repeat(${rows}, 80px)`;
+
+    //Calculating the number of columns required for the binary tree
+    const columns = Math.pow(2, rows) - 1;
+    console.log(columns);
+
+    treeContainer.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+
+    //Arraging the nodes in its positions
+
+    droppedElementsArray.forEach((value, index) => {
+        const row = Math.floor(Math.log2(index + 1));
+        // console.log(row);        
+        const positionLevel = index - Math.pow(2, row) + 1;
+        // console.log(positionLevel);        
+        const rowStart = Math.pow(2, rows - row - 1);
+        // console.log(rowStart);        
+        const step = Math.pow(2, rows - row);
+        // console.log(step);
+
+        const column = rowStart + positionLevel * step;
+        // console.log(value);
+        
+        const nodeDiv = document.getElementById(value.id);
+
+        const node = document.createElement('div');
+        // console.log(node);
+        
+        node.className = "node";
+        node.style.backgroundColor = nodeDiv.style.backgroundColor;
+        node.setAttribute("tooltipData", `${nodeDiv.getAttribute("tooltipData")}`);
+        node.style.gridRow = `${row + 1}`;
+        node.style.gridColumn = `${column}`;
+        // node.textContent = value;
+
+        treeContainer.appendChild(node);
+    });
+    
 }
 
-function buildBinaryTree(array) {
-    if(!array.length) return null;
+const page1Btn = document.getElementById("page1btn");
+const page2Btn = document.getElementById("page2btn");
 
-    const root = new treeNode(array[0]);
-    const queue = [root];
-    let i=1;
+const treebtn = document.getElementById("buildTreeBtn");
+const treeContainer = document.getElementById("binaryTree");
 
-    while(i < array.length) {
-        const current = queue.shift();
+const actionElement = document.getElementById("maindiv");
+const dropElement = document.getElementById("dragplace");
 
-        if(i < array.length) {
-            current.left = new treeNode(array[i++]);
-            queue.push(current.left);
-        }
+page1Btn.addEventListener('click', () => {
+    treebtn.style.display = "none";
+    treeContainer.style.display = "none";
+    actionElement.style.display = "flex";
+    dropElement.style.display = "flex";
+});
 
-        if(i < array.length) {
-            current.right = new treeNode(array[i++]);
-            queue.push(current.right);
-        }
-    }
-
-    return root;
-
-}
-
-function treeNode(value) {
-    this.value = value;
-    this.left = null;
-    this.right = null;
-}
+page2Btn.addEventListener('click', () => {
+    treebtn.style.display = "block";
+    treeContainer.style.display = "grid";
+    actionElement.style.display = "none";
+    dropElement.style.display = "none";
+});

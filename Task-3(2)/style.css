@@ -16,15 +16,16 @@ body {
     padding: 5px;
     margin: 20px 30px;
 }
-.pagination a {
+.pagination button {
     text-decoration: none;
     font-size: 20px;
     color: black;
     background-color: lightgrey;
     padding: 10px;
     border-radius: 5px;
+    border: none;
 }
-.pagination a:hover {
+.pagination button:hover {
     background-color: gray;
     color: white;
     border: 1px solid black;
@@ -38,7 +39,7 @@ body {
     padding: 5px;
 }
 .elementsdiv .element {
-    width: 80%;
+    width: 80vw;
     height: 200px;
     background-color: aqua;
     /* z-index: 2; */
@@ -96,10 +97,14 @@ body {
     margin: 5px;
     position: relative;
 }
-.dragdiv div::after {
-    content: attr(tooltip-data);
+.treeStructure div {
+    position: relative;
+}
+.dragdiv div::after, .treeStructure div::after {
+    content: attr(tooltipData);
     position: absolute;
     opacity: 0;
+    /* visibility: hidden; */
     background-color: black;
     color: white;
     top: 100%;
@@ -110,7 +115,7 @@ body {
     border-radius: 5px;
     z-index: 10;
 }
-.dragdiv div::before {
+.dragdiv div::before, .treeStructure div::before {
     content: "";
     position: absolute;
     bottom: -10px;
@@ -120,10 +125,12 @@ body {
     border-style: solid;
     border-color: transparent transparent black transparent;
     opacity: 0;
+    /* visibility: hidden; */
     z-index: 10;
 }
-.dragdiv div:hover::after, .dragdiv div:hover::before {
+.dragdiv div:hover::after, .dragdiv div:hover::before, .treeStructure div:hover::after, .treeStructure div:hover::before {
     opacity: 1;
+    /* visibility: visible; */
 }
 
 .elementsdiv .actionButton {
@@ -147,4 +154,40 @@ body {
     border: 1px solid black;
     color: white;
     transform: translateY(-3px);
+}
+
+#buildTreeBtn {
+    padding: 10px;
+    margin: 20px 0 0 50px;
+    background-color: lightgray;
+    border: none;
+    font-size: 20px;
+    border-radius: 5px;
+    transition: trasform 0.1s;
+    display: none;
+}
+#buildTreeBtn:hover {
+    background-color: gray;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.treeStructure {
+    display: grid;
+    gap: 20px;
+    width: 100%;
+    margin: 0 auto;
+    display: none;
+    /* max-width: 1000px; */
+}
+
+.treeStructure div {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 100px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
 }

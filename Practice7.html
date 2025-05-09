@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .treeContainer {
+            background-color: lightblue;
+            height: 50vh;
+            display: grid;
+            grid-template-rows: repeat(4, 100px);
+            grid-template-columns: repeat(15, 1fr);
+            gap: 5px;
+            place-items: center;
+        }
+        .treeContainer div {
+            width: 50px;
+            height: 50px;
+            background-color: aqua;
+            display: inline;
+            text-align: center;
+        }
+        #treeContainer1 {
+            display: grid;
+            gap: 20px;
+            place-items: center;
+            /* justify-content: start; */
+        }
+        .tree-row {
+            width: 1000px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+    </style>
+</head>
+<body>
+    <div class="treeContainer" id="treeStructure">
+        <div class="item" id="item1"></div>
+        <div class="item" id="item2"></div>
+        <div class="item" id="item3"></div>
+        <div class="item" id="item4"></div>
+        <div class="item" id="item5"></div>
+        <div class="item" id="item6"></div>
+        <div class="item" id="item7"></div>
+        <div class="item" id="item8"></div>
+        <div class="item" id="item9"></div>
+        <div class="item" id="item10"></div>
+        <div class="item" id="item11"></div>
+        <div class="item" id="item12"></div>
+        <div class="item" id="item13"></div>
+        <div class="item" id="item14"></div>
+        <div class="item" id="item15"></div>
+        <div class="item" id="item16"></div>
+        <div class="item" id="item17"></div>
+        <div class="item" id="item18"></div>
+        <div class="item" id="item19"></div>
+        <div class="item" id="item20"></div>
+        <div class="item" id="item21"></div>
+        <div class="item" id="item22"></div>
+        <!-- <div class="item2"></div>
+        <div class="item3"></div>
+        <div class="item4"></div>
+        <div class="item5"></div>
+        <div class="item6"></div>
+        <div class="item7"></div>
+        <div class="item8"></div>
+        <div class="item9"></div>
+        <div class="item10"></div>
+        <div class="item11"></div>
+        <div class="item12"></div>
+        <div class="item13"></div>
+        <div class="item14"></div>
+        <div class="item15"></div> -->
+    </div>
+
+    <div id="treeContainer1"></div>
+
+    <script>
+        const treeContainer = document.getElementById("treeContainer1");
+
+        const nodeElements = document.querySelectorAll(".treeContainer .item");
+        console.log(nodeElements);
+
+        nodeElementsArray = [];
+
+        nodeElements.forEach(element => {
+            nodeElementsArray.push(element);
+        })
+
+        console.log(nodeElementsArray);
+        const arrayLength = nodeElementsArray.length;
+        console.log(arrayLength);
+        
+
+        const rows = Math.ceil(Math.log2(arrayLength + 1))
+        console.log(rows);
+
+        const columns = Math.pow(2, rows) - 1;
+        console.log(columns);
+
+        let column = 1;
+        let basewidth = 1000;
+        let n = 0;
+        for(let i=0; i<rows;i++) {
+            const row = document.createElement('div');
+            row.className = "tree-row";
+            const nodeWidth = basewidth / Math.pow(2, i);
+            for(let j=0;j<column;j++) {
+                if(n < arrayLength) {
+                    const node = document.createElement('div');
+                    node.style.width = `${nodeWidth}px`;
+                    node.style.height = "50px";
+                    node.style.backgroundColor = "red";
+                    row.appendChild(node);
+                }
+                n++;
+            }
+            column = column * 2;
+            treeContainer.appendChild(row);
+        }        
+        
+        
+    </script>
+</body>
+</html>

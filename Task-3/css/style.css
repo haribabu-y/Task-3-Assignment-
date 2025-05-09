@@ -16,7 +16,7 @@ body {
     padding: 5px;
     margin: 20px 30px;
 }
-.pagination a {
+.pagination button {
     text-decoration: none;
     font-size: 20px;
     color: black;
@@ -24,7 +24,7 @@ body {
     padding: 10px;
     border-radius: 5px;
 }
-.pagination a:hover {
+.pagination button:hover {
     background-color: gray;
     color: white;
     border: 1px solid black;
@@ -42,22 +42,6 @@ body {
     height: 200px;
     background-color: aqua;
 }
-.dragdiv {
-    width: 80%;
-    height: 200px;
-    margin: 10px;
-    position: relative;
-    border: 1px solid black;
-    display: flex;
-    gap: 5px;
-    /* flex-direction: column; */
-}
-.dragdiv div {
-    background-color: aqua;
-    display: inline;
-    gap: 5px;
-    position: static;
-}
 .element {
     position: relative;
     border: 1px solid black;
@@ -71,10 +55,6 @@ body {
     border-top: none;
     border-bottom: none;
 }
-/* .elementsdiv div {
-    border: 1px solid black;
-
-} */
 .divs {
     height: 100%;
     position: absolute;
@@ -83,6 +63,57 @@ body {
     border-bottom: none;
     /* background-color: azure; */
 }
+.dragdiv {
+    width: 95%;
+    height: 50vh;
+    margin: 10px;
+    position: relative;
+    border: 1px solid black;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    overflow: auto;
+    /* flex-direction: column; */
+}
+.dragdiv div {
+    background-color: rgb(119, 240, 173);
+    height: 200px;
+    /* display: inline; */
+    gap: 5px;
+    position: relative;
+    margin: 10px;
+
+
+}
+
+.treeContainer div {
+    position: relative;
+}
+
+
+.dragdiv div::after, .nodes div::after {
+    content: attr(tooltip-data);
+    position: absolute;
+    visibility: hidden;
+    background-color: black;
+    color: white;
+    top: 100%;
+    left: 50%;
+    margin-left: -40%;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 10;
+}
+.dragdiv div:hover::after, .nodes div:hover::after {
+    visibility: visible;
+}
+
+/* .elementsdiv div {
+    border: 1px solid black;
+
+} */
+
 .elementsdiv .actionButton {
     width: 20%;
     display: flex;
@@ -104,4 +135,43 @@ body {
     border: 1px solid black;
     color: white;
     transform: translateY(-3px);
+}
+
+#buildTreeBtn {
+    padding: 10px;
+    margin: 20px;
+    background-color: lightgray;
+    border: none;
+    font-size: 20px;
+    border-radius: 5px;
+
+}
+
+#buildTreeBtn:hover {
+    background-color: gray;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.treeContainer {
+    width: 100%;
+    /* display: grid; */
+    gap: 20px;
+    place-content: center;
+}
+
+.treeContainer .tree-row {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+
+}
+
+.nodes {
+    display: grid;
+    place-items: center;
+}
+
+.nodes div {
+    border-radius: 10px;
 }

@@ -100,11 +100,11 @@ body {
 .treeStructure div {
     position: relative;
 }
-.dragdiv div::after, .treeStructure div::after {
+.dragdiv div::after, .nodes div::after {
     content: attr(tooltipData);
     position: absolute;
-    opacity: 0;
-    /* visibility: hidden; */
+    /* opacity: 0; */
+    visibility: hidden;
     background-color: black;
     color: white;
     top: 100%;
@@ -115,7 +115,7 @@ body {
     border-radius: 5px;
     z-index: 10;
 }
-.dragdiv div::before, .treeStructure div::before {
+.dragdiv div::before, .nodes div::before {
     content: "";
     position: absolute;
     bottom: -10px;
@@ -124,13 +124,13 @@ body {
     border-width: 5px;
     border-style: solid;
     border-color: transparent transparent black transparent;
-    opacity: 0;
-    /* visibility: hidden; */
+    /* opacity: 0; */
+    visibility: hidden;
     z-index: 10;
 }
-.dragdiv div:hover::after, .dragdiv div:hover::before, .treeStructure div:hover::after, .treeStructure div:hover::before {
-    opacity: 1;
-    /* visibility: visible; */
+.dragdiv div:hover::after, .dragdiv div:hover::before, .nodes div:hover::after, .nodes div:hover::before {
+    /* opacity: 1; */
+    visibility: visible;
 }
 
 .elementsdiv .actionButton {
@@ -175,19 +175,33 @@ body {
 .treeStructure {
     display: grid;
     gap: 20px;
-    width: 100%;
-    margin: 0 auto;
-    display: none;
+    place-items: center;
+    /* width: 100%; */
+    /* margin: 0 auto;
+    display: none; */
     /* max-width: 1000px; */
 }
 
-.treeStructure div {
-    border: 1px solid black;
+.treeStructure .tree-row {
+    /* border: 1px solid black;
     border-radius: 20px;
     width: 100px;
     height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: auto;
+    margin: auto; */
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.nodes {
+    display: grid;
+    place-items: center;
+}
+
+.nodes div {
+    border-radius: 10px;
 }

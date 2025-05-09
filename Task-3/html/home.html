@@ -8,8 +8,8 @@
 </head>
 <body>
     <div class="pagination">
-        <a href="#">Page 1</a>
-        <a href="#">Page 2</a>
+        <button id="page1btn">Page 1</button>
+        <button id="page2btn">Page 2</button>
     </div>
     <div class="elementsdiv">
         <div class="element" onclick="splitDiv(event,this)" id="mainElement"></div>
@@ -20,10 +20,11 @@
             <button onclick="location.reload()">Reset</button>
         </div>
     </div>
-    <hr>
     
-    <div class="dragdiv" id="dragplace" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)"></div>
+    <div class="dragdiv" id="dragplace" ondrop="dropHandler(event, this)" ondragover="dragoverHandler(event)"></div>
     <!-- <textarea name="div" id="dragitem" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)" style="width: 200px; height: 100px;"></textarea> -->
+     <button onclick="buildTree()" id="buildTreeBtn">Build Tree</button>
+     <div class="treeContainer" id="buildTree"></div>
 
     <script src="/Task-3/js/script.js"></script>
 </body>

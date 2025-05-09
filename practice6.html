@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .treeContainer {
+            background-color: lightblue;
+            height: 80vh;
+            display: grid;
+            grid-template-rows: repeat(4, 100px);
+            grid-template-columns: repeat(15, 1fr);
+            gap: 5px;
+            place-items: center;
+        }
+        .treeContainer div {
+            width: 50px;
+            height: 50px;
+            background-color: aqua;
+            display: inline;
+            text-align: center;
+        }
+        #item01 {
+            grid-column: 1 / 16;
+        }
+        #item02 {
+            grid-column: 1 / 8;
+        }
+        #item03 {
+            grid-column: 9 / 16;
+        }
+        #item04 {
+            grid-column: 1 / 4;
+        }
+        #item05 {
+            grid-column: 5 / 8;
+        }#item06 {
+            grid-column: 9 / 12;
+        }#item07 {
+            grid-column: 13 / 16;
+        }#item08 {
+            grid-column: 1;
+        }
+        #item09 {
+            grid-column: 3;
+        }#item010 {
+            grid-column: 5;
+        }#item011 {
+            grid-column: 7;
+        }#item012 {
+            grid-column: 9;
+        }#item013 {
+            grid-column: 11;
+        }#item014 {
+            grid-column: 13;
+        }#item015{
+            grid-column: 15;
+        }
+
+        #treeContainer {
+            display: grid;
+            gap: 5px;
+            place-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="treeContainer" id="treeStructure">
+        <div class="item" id="item1"></div>
+        <div class="item" id="item2"></div>
+        <div class="item" id="item3"></div>
+        <div class="item" id="item4"></div>
+        <div class="item" id="item5"></div>
+        <div class="item" id="item6"></div>
+        <div class="item" id="item7"></div>
+        <div class="item" id="item8"></div>
+        <div class="item" id="item9"></div>
+        <div class="item" id="item10"></div>
+        <div class="item" id="item11"></div>
+        <div class="item" id="item12"></div>
+        <div class="item" id="item13"></div>
+        <div class="item" id="item14"></div>
+        <div class="item" id="item15"></div>
+        <!-- <div class="item2"></div>
+        <div class="item3"></div>
+        <div class="item4"></div>
+        <div class="item5"></div>
+        <div class="item6"></div>
+        <div class="item7"></div>
+        <div class="item8"></div>
+        <div class="item9"></div>
+        <div class="item10"></div>
+        <div class="item11"></div>
+        <div class="item12"></div>
+        <div class="item13"></div>
+        <div class="item14"></div>
+        <div class="item15"></div> -->
+    </div>
+
+    <div id="treeContainer"></div>
+
+    <script>
+        const treeContainer = document.getElementById("treeContainer");
+
+        const nodeElements = document.querySelectorAll(".treeContainer .item");
+        console.log(nodeElements);
+
+        nodeElementsArray = [];
+
+        nodeElements.forEach(element => {
+            nodeElementsArray.push(element);
+        })
+
+        console.log(nodeElementsArray);
+        const arrayLength = nodeElementsArray.length;
+        console.log(arrayLength);
+        
+
+        const rows = Math.ceil(Math.log2(arrayLength + 1))
+        console.log(rows);
+
+        const columns = Math.pow(2, rows) - 1;
+        console.log(columns);
+
+        treeContainer.style.gridTemplateRows = `repeat(${rows}, 50px)`;
+        treeContainer.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+
+        let column = 1;
+        let basewidth = 1000;
+        n = 0;
+        for(let i=0;i<rows;i++) {
+            // let nodeWidth = basewidth/ Math.pow(2,i);
+            for(let j=0;j<column;j++) {
+                if(n < arrayLength) {
+                    const node = document.createElement('div');
+                    // node.style.width = `${nodeWidth}px`;
+                    node.style.width = "50px";
+                    node.style.height = "50px";
+                    node.style.background = "red";
+                    treeContainer.appendChild(node);
+                    node.style.gridRow = i+1;
+                    // node.style.gridColumn = 1 / `${columns}`;
+                }
+                n++;
+            }
+            column = column*2;
+        }
+        
+        
+        
+        
+    </script>
+</body>
+</html>

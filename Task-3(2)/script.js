@@ -2,7 +2,7 @@
 const cutArea = document.getElementById("mainElement");
 const styles = window.getComputedStyle(cutArea);
 let pieces = [ { width: parseInt(styles.width) } ];
-// console.log(pieces);
+console.log(pieces);
 
 // console.log(styles.width);
 
@@ -41,7 +41,6 @@ function splitDiv(event) {
 
         if(clickX >= startX && clickX <= endX) {
             const relativeX = clickX - startX;
-            if(relativeX <= 2 || relativeX >= pieceWidth -2) return;
 
             pieces.splice(i, 1,
                 { width: relativeX },
@@ -220,43 +219,79 @@ function buildTree() {
     const rows = Math.ceil(Math.log2(nodeCount + 1));
     console.log(rows);
 
-    treeContainer.style.gridTemplateRows = `repeat(${rows}, 80px)`;
+    // treeContainer.style.gridTemplateRows = `repeat(${rows}, 80px)`;
 
     //Calculating the number of columns required for the binary tree
     const columns = Math.pow(2, rows) - 1;
     console.log(columns);
 
-    treeContainer.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+    // treeContainer.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+
+    //arragning the items in the tree
+    let column = 1;
+    let baseWidth = 100;
+    let n = 0;
+    for(let i=0; i<rows; i++) {
+        const row = document.createElement('div');
+        row.className = "tree-row";
+        const nodeWidth = baseWidth / Math.pow(2,i);
+        for(let j=0;j<column;j++) {
+            if(n < nodeCount) {
+                const nodeDiv = document.getElementById(droppedElementsArray[n].id);
+                // console.log(nodeDiv);
+                // console.log(droppedElementsArray[n].id);
+                
+                
+                const node = document.createElement('div');
+                node.style.width = `${nodeWidth}%`;
+                node.style.height = "50px";
+                node.className = "nodes";
+                // node.style.backgroundColor = nodeDiv.style.backgroundColor;
+                // node.setAttribute("tooltipData", `${nodeDiv.getAttribute("tooltipData")}`);
+                    const content = document.createElement('div');
+                    content.style.width = "50px";
+                    content.style.height = "50px";
+                    content.setAttribute("tooltipData", `${nodeDiv.getAttribute("tooltipData")}`);
+                    content.style.backgroundColor = nodeDiv.style.backgroundColor;
+                    // content.style.backgroundColor = "green";
+                    node.appendChild(content);
+                row.appendChild(node);
+            }
+            n++;
+        }
+        column = column * 2;
+        treeContainer.appendChild(row);
+    }
+
 
     //Arraging the nodes in its positions
+    // droppedElementsArray.forEach((value, index) => {
+    //     const row = Math.floor(Math.log2(index + 1));
+    //     // console.log(row);        
+    //     const positionLevel = index - Math.pow(2, row) + 1;
+    //     // console.log(positionLevel);        
+    //     const rowStart = Math.pow(2, rows - row - 1);
+    //     // console.log(rowStart);        
+    //     const step = Math.pow(2, rows - row);
+    //     // console.log(step);
 
-    droppedElementsArray.forEach((value, index) => {
-        const row = Math.floor(Math.log2(index + 1));
-        // console.log(row);        
-        const positionLevel = index - Math.pow(2, row) + 1;
-        // console.log(positionLevel);        
-        const rowStart = Math.pow(2, rows - row - 1);
-        // console.log(rowStart);        
-        const step = Math.pow(2, rows - row);
-        // console.log(step);
-
-        const column = rowStart + positionLevel * step;
-        // console.log(value);
+    //     const column = rowStart + positionLevel * step;
+    //     // console.log(value);
         
-        const nodeDiv = document.getElementById(value.id);
+    //     const nodeDiv = document.getElementById(value.id);
 
-        const node = document.createElement('div');
-        // console.log(node);
+    //     const node = document.createElement('div');
+    //     // console.log(node);
         
-        node.className = "node";
-        node.style.backgroundColor = nodeDiv.style.backgroundColor;
-        node.setAttribute("tooltipData", `${nodeDiv.getAttribute("tooltipData")}`);
-        node.style.gridRow = `${row + 1}`;
-        node.style.gridColumn = `${column}`;
-        // node.textContent = value;
+    //     node.className = "node";
+    //     node.style.backgroundColor = nodeDiv.style.backgroundColor;
+    //     node.setAttribute("tooltipData", `${nodeDiv.getAttribute("tooltipData")}`);
+    //     node.style.gridRow = `${row + 1}`;
+    //     node.style.gridColumn = `${column}`;
+    //     // node.textContent = value;
 
-        treeContainer.appendChild(node);
-    });
+    //     treeContainer.appendChild(node);
+    // });
     
 }
 
